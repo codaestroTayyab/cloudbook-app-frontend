@@ -4,7 +4,7 @@
 node_modules
 /.pnp
 .pnp.js
-/backend
+
 # testing
 /coverage
 
@@ -21,8 +21,3 @@ node_modules
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
-backend/package-lock.json
-backend/package.json
-backend/models/Notes.js
-backend/routes/auth.js
-backend/routes/notes.js
