@@ -20,28 +20,41 @@ const NoteState = (props) => {
   }
 
   //Add note
-  const addNote = (title, description, tag) => {
+  const addNote = async (title, description, tag) => {
+    const response = await fetch(`${host}/cloudbook/notes/addnote`, {
+      method: 'POST', // *GET, POST, PUT, DELETE, etc.
+      
+      headers: {
+        'Content-Type': 'application/json',
+        'jwt-token': 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNjJkZjBjOWRlM2QyYTUzYzlhN2IzYTMyIn0sImlhdCI6MTY1ODc4NDkzNH0.H3VdbxUX3SfQcqFJkMialP-g1ffkxaoJdu51hWyQ6WA'
+      },
+      body: JSON.stringify({title, description, tag}) // body data type must match "Content-Type" header
+    }); 
     console.log("Adding a note");
-    let note = {
-      _id: "62e44191add702edaba929c8",
-      user: "62df0c9de3d2a53c9a7a3a32",
-      title: title,
-      description: description,
-      tag: tag,
-      date: "2022-07-29T20:22:41.928Z",
-      __v: 0,
-    };
+    const note = await response.json()
     setNotes(notes.concat(note));
   };
   //Delete note
-  const deleteNote = (id) => {
+  const deleteNote = async (id) => {
+    
     console.log('Deleting note with id = ' + id);
+    const response = await fetch(`${host}/cloudbook/notes/deletenote/${id}`, {
+      method: 'DELETE', // *GET, POST, PUT, DELETE, etc.
+      
+      headers: {
+        'Content-Type': 'application/json',
+        'jwt-token': 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNjJkZjBjOWRlM2QyYTUzYzlhN2IzYTMyIn0sImlhdCI6MTY1ODc4NDkzNH0.H3VdbxUX3SfQcqFJkMialP-g1ffkxaoJdu51hWyQ6WA'
+      },
+    }); 
     setNotes(
       notes.filter((note) => {
         return note._id !== id;
       })
     );
-  };
+    const data = await response.json(); // parses JSON response into native JavaScript objects
+    console.log(data);
+  };  
+
 
   //Edit note
   const editNote = (title, description, tag, id) => {
