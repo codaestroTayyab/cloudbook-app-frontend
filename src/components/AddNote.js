@@ -7,6 +7,7 @@ export default function AddNote() {
   const handleAddClick = (event) => {
     event.preventDefault();
     addNote(note.title, note.description, note.tag);
+    setNote({title: "", description: "", tag: "" });
   };
   const [note, setNote] = useState({ title: "", description: "", tag: "" });
   const handleChange = (event) => {
@@ -16,7 +17,7 @@ export default function AddNote() {
     <div>
       <div className="container my-3">
         <h2>Add Note</h2>
-        <form>
+        <form onSubmit={handleAddClick}>
           <div className="mb-3">
             <label htmlFor="exampleInputEmail1" className="form-label">
               Title
@@ -28,6 +29,9 @@ export default function AddNote() {
               name="title"
               aria-describedby="emailHelp"
               onChange={handleChange}
+              minLength={3}
+              required
+              value={note.title}
             />
           </div>
           <div className="mb-3">
@@ -40,6 +44,9 @@ export default function AddNote() {
               id="description"
               className="form-control"
               onChange={handleChange}
+              minLength={5}
+              required
+              value={note.description}
             />
           </div>
           <div className="mb-3">
@@ -52,12 +59,13 @@ export default function AddNote() {
               id="tag"
               className="form-control"
               onChange={handleChange}
+              value={note.tag}
             />
           </div>
           <button
             type="submit"
             className="btn btn-primary"
-            onClick={handleAddClick}
+            disabled={note.title.length < 3 || note.description.length <5}
           >
             Add Note
           </button>

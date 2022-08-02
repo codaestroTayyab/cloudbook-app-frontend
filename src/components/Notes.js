@@ -36,7 +36,7 @@ export default function Notes() {
   //handleEditClick function called when "Save Changes" button is clicked
   const handleEditClick = (event) => {
     //Sending data to editNote function of NoteStates context
-    editNote(note.etitle, note.edescription, note.etag, note.id)
+    editNote(note.etitle, note.edescription, note.etag, note.id);
     //prevents page from reloading
     event.preventDefault();
     //reference of close button to close modal when note updated
@@ -83,7 +83,7 @@ export default function Notes() {
               </div>
               <div className="modal-body">
                 {" "}
-                <form>
+                <form onSubmit={handleEditClick}>
                   <div className="mb-3">
                     <label htmlFor="exampleInputEmail1" className="form-label">
                       Title
@@ -95,7 +95,9 @@ export default function Notes() {
                       name="etitle"
                       aria-describedby="emailHelp"
                       onChange={handleChange}
-                      value = {note.etitle}
+                      value={note.etitle}
+                      minLength={3}
+                      required
                     />
                   </div>
                   <div className="mb-3">
@@ -112,6 +114,8 @@ export default function Notes() {
                       className="form-control"
                       onChange={handleChange}
                       value={note.edescription}
+                      minLength={3}
+                      required
                     />
                   </div>
                   <div className="mb-3">
@@ -140,7 +144,9 @@ export default function Notes() {
                 <button
                   type="button"
                   className="btn btn-primary"
-                  onClick={handleEditClick}
+                  disabled={
+                    note.etitle.length > 3 || note.edescription.length > 5
+                  }
                 >
                   Save changes
                 </button>
