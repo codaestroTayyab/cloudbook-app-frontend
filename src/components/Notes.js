@@ -1,11 +1,18 @@
 import React from "react";
 import { useContext, useEffect, useRef, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import NoteContext from "../contexts/NoteContext";
 import NoteItem from "./NoteItem";
 export default function Notes() {
   let { notes, getNotes, editNote } = useContext(NoteContext);
+  let navigate = useNavigate();
   useEffect(() => {
-    getNotes();
+    if (localStorage.getItem("token")) {
+      getNotes();
+    } else {
+      navigate("/login");
+    }
+
     // eslint-disable-next-line
   }, []);
 
@@ -50,36 +57,18 @@ export default function Notes() {
   return (
     <>
       <div>
-        <button
-          type="button"
-          className="btn btn-primary d-none"
-          data-bs-toggle="modal"
-          data-bs-target="#exampleModal"
-          ref={ref}
-        >
+        <button type="button" className="btn btn-primary d-none" data-bs-toggle="modal" data-bs-target="#exampleModal" ref={ref}>
           Launch demo modal
         </button>
 
-        <div
-          className="modal fade"
-          id="exampleModal"
-          tabIndex="-1"
-          aria-labelledby="exampleModalLabel"
-          aria-hidden="true"
-        >
+        <div className="modal fade" id="exampleModal" tabIndex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
           <div className="modal-dialog modal-dialog-centered">
             <div className="modal-content">
               <div className="modal-header">
                 <h5 className="modal-title" id="exampleModalLabel">
                   Edit Note
                 </h5>
-                <button
-                  type="button"
-                  className="btn-close"
-                  data-bs-dismiss="modal"
-                  aria-label="Close"
-                  ref={refClose}
-                ></button>
+                <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close" ref={refClose}></button>
               </div>
               <div className="modal-body">
                 {" "}
@@ -88,66 +77,27 @@ export default function Notes() {
                     <label htmlFor="exampleInputEmail1" className="form-label">
                       Title
                     </label>
-                    <input
-                      type="text"
-                      className="form-control"
-                      id="etitle"
-                      name="etitle"
-                      aria-describedby="emailHelp"
-                      onChange={handleChange}
-                      value={note.etitle}
-                      minLength={3}
-                      required
-                    />
+                    <input type="text" className="form-control" id="etitle" name="etitle" aria-describedby="emailHelp" onChange={handleChange} value={note.etitle} minLength={3} required />
                   </div>
                   <div className="mb-3">
-                    <label
-                      htmlFor="exampleInputPassword1"
-                      className="form-label"
-                    >
+                    <label htmlFor="exampleInputPassword1" className="form-label">
                       Description
                     </label>
-                    <input
-                      type="text"
-                      name="edescription"
-                      id="edescription"
-                      className="form-control"
-                      onChange={handleChange}
-                      value={note.edescription}
-                      minLength={3}
-                      required
-                    />
+                    <input type="text" name="edescription" id="edescription" className="form-control" onChange={handleChange} value={note.edescription} minLength={3} required />
                   </div>
                   <div className="mb-3">
                     <label htmlFor="exampleTag" className="form-label">
                       Tag
                     </label>
-                    <input
-                      type="text"
-                      name="etag"
-                      id="etag"
-                      className="form-control"
-                      onChange={handleChange}
-                      value={note.etag}
-                    />
+                    <input type="text" name="etag" id="etag" className="form-control" onChange={handleChange} value={note.etag} />
                   </div>
                 </form>
               </div>
               <div className="modal-footer">
-                <button
-                  type="button"
-                  className="btn btn-secondary"
-                  data-bs-dismiss="modal"
-                >
+                <button type="button" className="btn btn-secondary" data-bs-dismiss="modal">
                   Close
                 </button>
-                <button
-                  type="button"
-                  className="btn btn-primary"
-                  disabled={
-                    note.etitle.length > 3 || note.edescription.length > 5
-                  }
-                >
+                <button type="button" className="btn btn-primary" disabled={note.etitle.length > 3 || note.edescription.length > 5}>
                   Save changes
                 </button>
               </div>
@@ -158,9 +108,7 @@ export default function Notes() {
       <div className="row my-3">
         <h2 className="my-3">Your Notes</h2>
         {notes.map((note) => {
-          return (
-            <NoteItem key={note._id} updateNote={updateNote} note={note} />
-          );
+          return <NoteItem key={note._id} updateNote={updateNote} note={note} />;
         })}
       </div>
     </>

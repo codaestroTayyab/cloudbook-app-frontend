@@ -12,8 +12,7 @@ const NoteState = (props) => {
     const response = await fetch(`${host}/cloudbook/notes/getallnotes`, {
       method: "GET", // *GET, POST, PUT, DELETE, etc.
       headers: {
-        "jwt-token":
-          "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNjJkZjBjOWRlM2QyYTUzYzlhN2IzYTMyIn0sImlhdCI6MTY1ODc4NDkzNH0.H3VdbxUX3SfQcqFJkMialP-g1ffkxaoJdu51hWyQ6WA",
+        "jwt-token": localStorage.getItem("token"),
       },
     });
     const data = await response.json(); // parses JSON response into native JavaScript objects
@@ -27,8 +26,7 @@ const NoteState = (props) => {
 
       headers: {
         "Content-Type": "application/json",
-        "jwt-token":
-          "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNjJkZjBjOWRlM2QyYTUzYzlhN2IzYTMyIn0sImlhdCI6MTY1ODc4NDkzNH0.H3VdbxUX3SfQcqFJkMialP-g1ffkxaoJdu51hWyQ6WA",
+        "jwt-token": localStorage.getItem("token"),
       },
       body: JSON.stringify({ title, description, tag }), // body data type must match "Content-Type" header
     });
@@ -44,8 +42,7 @@ const NoteState = (props) => {
 
       headers: {
         "Content-Type": "application/json",
-        "jwt-token":
-          "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNjJkZjBjOWRlM2QyYTUzYzlhN2IzYTMyIn0sImlhdCI6MTY1ODc4NDkzNH0.H3VdbxUX3SfQcqFJkMialP-g1ffkxaoJdu51hWyQ6WA",
+        "jwt-token": localStorage.getItem("token"),
       },
     });
     setNotes(
@@ -65,8 +62,7 @@ const NoteState = (props) => {
 
       headers: {
         "Content-Type": "application/json",
-        "jwt-token":
-          "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNjJkZjBjOWRlM2QyYTUzYzlhN2IzYTMyIn0sImlhdCI6MTY1ODc4NDkzNH0.H3VdbxUX3SfQcqFJkMialP-g1ffkxaoJdu51hWyQ6WA",
+        "jwt-token": localStorage.getItem("token"),
       },
       body: JSON.stringify({ title, description, tag }), // body data type must match "Content-Type" header
     });
