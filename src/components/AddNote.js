@@ -7,16 +7,24 @@ export default function AddNote() {
   const handleAddClick = (event) => {
     event.preventDefault();
     addNote(note.title, note.description, note.tag);
-    setNote({title: "", description: "", tag: "" });
+    setNote({ title: "", description: "", tag: note.tag });
   };
-  const [note, setNote] = useState({ title: "", description: "", tag: "" });
+  const [note, setNote] = useState({ title: "", description: "", tag: ""});
   const handleChange = (event) => {
     setNote({ ...note, [event.target.name]: event.target.value });
   };
+
+  const options = [
+    { value: "Important", text: "Important" },
+    { value: "Daily Life", text: "Daily Life" },
+    { value: "General", text: "General" },
+  ];
+
+  
   return (
     <div>
-      <div className="container my-3">
-        <h2>Add Note</h2>
+      <div className="container" style={{ width: "30rem", marginTop: "18px", marginBottom: "3rem" }}>
+        <h2 className="text-center fw-bold">Add Note</h2>
         <form onSubmit={handleAddClick}>
           <div className="mb-3">
             <label htmlFor="exampleInputEmail1" className="form-label">
@@ -27,6 +35,7 @@ export default function AddNote() {
               className="form-control"
               id="title"
               name="title"
+              placeholder="Enter Title Here (Atleast 3 characters)"
               aria-describedby="emailHelp"
               onChange={handleChange}
               minLength={3}
@@ -42,6 +51,7 @@ export default function AddNote() {
               type="text"
               name="description"
               id="description"
+              placeholder="Enter Description Here (Atleast 5 characters)"
               className="form-control"
               onChange={handleChange}
               minLength={5}
@@ -53,20 +63,19 @@ export default function AddNote() {
             <label htmlFor="exampleTag" className="form-label">
               Tag
             </label>
-            <input
-              type="text"
-              name="tag"
-              id="tag"
-              className="form-control"
-              onChange={handleChange}
-              value={note.tag}
-            />
+            <select className="form-select form-select" aria-label=".form-select example" name="tag" id="tag" onChange={handleChange}>
+              <option selected disabled>Select Note Tag</option>
+              {options.map((option) => {
+                return (
+                  <option key={option.value} value={option.value}>
+                    {option.text}
+                  </option>
+                );
+              })}
+            </select>
+            {/* <input type="text" name="tag" id="tag" placeholder="Enter Tag Here" className="form-control" onChange={handleChange} value={note.tag} /> */}
           </div>
-          <button
-            type="submit"
-            className="btn btn-primary"
-            disabled={note.title.length < 3 || note.description.length <5}
-          >
+          <button type="submit" className="btn btn-primary" disabled={note.title.length < 3 || note.description.length < 5}>
             Add Note
           </button>
         </form>

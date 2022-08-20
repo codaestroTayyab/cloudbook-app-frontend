@@ -2,10 +2,16 @@ import { createContext } from "react";
 
 import React from "react";
 import { useNavigate } from "react-router-dom";
+import { useContext } from "react";
+import NoteContext from "./NoteContext";
 
 export const contextForAuth = createContext();
 
 export default function AuthContext(props) {
+
+  let context = useContext(NoteContext);
+  const {alertShow} = context;
+
   const host = "http://localhost:5000";
   const navigate = useNavigate();
 
@@ -29,9 +35,11 @@ export default function AuthContext(props) {
       //Save token in local storage
       localStorage.setItem("token", responseData.authToken);
       //Navigate to home page
-      navigate("/");
+      navigate("/notes");
+      alertShow("Logged in Successfully", "success");
+
     } else {
-      alert("Invalid Credentials");
+        alertShow("Invalid Credentials", "danger");
     }
   };
 
@@ -55,9 +63,10 @@ export default function AuthContext(props) {
       //Save token in local storage
       localStorage.setItem("token", responseData.authToken);
       //Navigate to home page
-      navigate("/");
+      navigate("/notes");
+      alertShow("Signed up Successfully", "success");
     } else {
-      alert("Invalid Credentials");
+      alertShow("Invalid Credentials", "danger");
     }
   };
 

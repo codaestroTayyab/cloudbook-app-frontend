@@ -1,6 +1,6 @@
 import React from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
-import logo from "../icons8-notebook-64.png";
+import logo from "../CloudbookLogo2.svg";
 
 export default function Navbar() {
   let location = useLocation();
@@ -11,13 +11,10 @@ export default function Navbar() {
   }
   return (
     <>
-      <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
+      <nav className="navbar navbar-expand-lg navbar-light">
         <div className="container-fluid">
-          <a className="navbar-brand" href="/">
-            <img src={logo} alt="Avatar Logo" style={{ width: "40px" }} />
-          </a>
           <Link className="navbar-brand" to="/">
-            Cloudbook
+            <img src={logo} alt="Avatar Logo" style={{width: "165px"}} />
           </Link>
           <button
             className="navbar-toggler"
@@ -38,8 +35,8 @@ export default function Navbar() {
                 </Link>
               </li>
               <li className="nav-item">
-                <Link className={`nav-link ${location.pathname === "/about" ? "active" : ""}`} to="/about">
-                  About
+                <Link className={`nav-link ${location.pathname === "/notes" ? "active" : ""}`} to="/notes">
+                  Notes
                 </Link>
               </li>
             </ul>
@@ -53,7 +50,7 @@ export default function Navbar() {
                 </Link>
               </div>
             ) : (
-              <button onClick={handleLogout} className="btn btn-outline-warning mx-1">
+              <button onClick={handleLogout} className="btn btn-outline-dark mx-1">
                 Logout
               </button>
             )}

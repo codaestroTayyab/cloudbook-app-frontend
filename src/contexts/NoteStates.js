@@ -6,6 +6,23 @@ const NoteState = (props) => {
 
   const [notes, setNotes] = useState(notesIntial);
 
+  //For different actions alerts
+  const [alert, setAlert] = useState(null);
+
+  //Functions to show alerts
+  const alertShow = (msg, type) => {
+    setAlert({
+      msg: msg,
+      type: type,
+    });
+
+    setTimeout(() => {
+      setAlert(null);
+    }, 2000);
+  };
+
+
+
   //Get All Notes
   const getNotes = async () => {
     //Api Call
@@ -33,6 +50,7 @@ const NoteState = (props) => {
     console.log("Adding a note");
     const note = await response.json();
     setNotes(notes.concat(note));
+    alertShow("Note Added", "success");
   };
   //Delete note
   const deleteNote = async (id) => {
@@ -52,6 +70,7 @@ const NoteState = (props) => {
     );
     const data = await response.json(); // parses JSON response into native JavaScript objects
     console.log(data);
+    alertShow("Note Deleted", "danger");
   };
 
   //Edit note
@@ -79,11 +98,12 @@ const NoteState = (props) => {
       }
     }
     setNotes(editedNotes);
+    alertShow("Note Edited Successfully", "success");
   };
 
   return (
     <NoteContext.Provider
-      value={{ notes, setNotes, addNote, deleteNote, editNote, getNotes }}
+      value={{ notes, setNotes, addNote, deleteNote, editNote, getNotes, alert, alertShow}}
     >
       {props.children}
     </NoteContext.Provider>

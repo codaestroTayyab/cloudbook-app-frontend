@@ -7,22 +7,25 @@ import NoteState from "./contexts/NoteStates";
 import Login from "./components/Login";
 import Signup from "./components/Signup";
 import AuthContext from "./contexts/AuthContext";
+import Alert from "./components/Alert";
+
 
 function App() {
+  
+
   return (
-    <div>
       <NoteState>
         <AuthContext>
           <Navbar />
+          <Alert/>
           <Routes>
-            <Route exact path="/" element={<Home />} />
-            <Route exact path="/about" element={<About />} />
+            <Route exact path="/" element={<About />} />
+            <Route exact path="/notes" element={<Home />} />
             <Route exact path="/login" element={<Login />} />
             <Route exact path="/signup" element={<Signup />} />
           </Routes>
         </AuthContext>
       </NoteState>
-    </div>
   );
 }
 
